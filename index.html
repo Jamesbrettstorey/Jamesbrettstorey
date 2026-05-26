@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spirit Masks — Game Concept</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --dark: #0a0a0f;
+      --dark-2: #111118;
+      --dark-3: #1a1a24;
+      --dark-4: #22222f;
+      --text: #d4cfc8;
+      --text-dim: #7a7570;
+      --earth: #8b6914;
+      --fire: #c0392b;
+      --water: #1a6fa8;
+      --wind: #2ecc71;
+      --lightning: #f39c12;
+      --ice: #74b9ff;
+      --life: #27ae60;
+      --death: #6c3483;
+      --poison: #1e8449;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 60%, #1a0f2e 0%, var(--dark) 70%);
+      padding: 2rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .mask-icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      letter-spacing: 0.35em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      max-width: 600px;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 3rem;
+    }
+
+    .scroll-cta {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .scroll-cta:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: #ece8e0;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    p { margin-bottom: 1rem; color: var(--text); }
+
+    .section-bg {
+      background: var(--dark-2);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .section-bg-2 { background: var(--dark-3); }
+
+    /* ── CONCEPT CARD ── */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .concept-card {
+      background: var(--dark-4);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .concept-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-3px);
+    }
+
+    .concept-card .icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .concept-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .concept-card p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── MASK ELEMENTS ── */
+    .elements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .element-card {
+      background: var(--dark-4);
+      border-radius: 2px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-top: 3px solid var(--elem-color, var(--gold));
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .element-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .element-card .elem-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+    .element-card .elem-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--elem-color, var(--gold));
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .element-card .elem-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.4; }
+
+    /* ── MASK EXAMPLE ── */
+    .mask-example {
+      background: var(--dark-4);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2.5rem;
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 600px) { .mask-example { grid-template-columns: 1fr; } }
+
+    .mask-example h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--earth);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+    }
+    .stat-label { width: 100px; color: var(--text-dim); flex-shrink: 0; }
+    .stat-bar { flex: 1; height: 6px; background: var(--dark); border-radius: 3px; overflow: hidden; }
+    .stat-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+    .stat-value { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold); width: 50px; text-align: right; }
+
+    .bonus-list, .penalty-list { list-style: none; }
+    .bonus-list li, .penalty-list li {
+      font-size: 0.9rem;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .bonus-list li::before { content: '↑ '; color: var(--life); }
+    .penalty-list li::before { content: '↓ '; color: var(--fire); }
+
+    /* ── PROGRESSION ── */
+    .progression-zones {
+      margin-top: 2.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+    .progression-zones::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    .zone {
+      position: relative;
+      padding: 1.5rem 0 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .zone:last-child { border-bottom: none; }
+    .zone::before {
+      content: '';
+      position: absolute;
+      left: -1.6rem;
+      top: 2rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--zone-color, var(--gold));
+      border: 2px solid var(--dark);
+      box-shadow: 0 0 8px var(--zone-color, var(--gold));
+    }
+
+    .zone-level {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--zone-color, var(--gold));
+      margin-bottom: 0.25rem;
+    }
+    .zone h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: #ece8e0;
+      margin-bottom: 0.4rem;
+    }
+    .zone p { font-size: 0.9rem; color: var(--text-dim); margin: 0; }
+
+    /* ── WORLD ── */
+    .world-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) { .world-intro { grid-template-columns: 1fr; } }
+
+    .lore-quote {
+      border-left: 3px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      background: var(--dark-4);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin: 2rem 0;
+    }
+    .lore-quote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-style: normal;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+
+    /* ── MASK CULTURE ── */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .culture-card {
+      background: var(--dark-4);
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 2rem;
+    }
+    .culture-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--gold-light);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    .culture-card ul { list-style: none; }
+    .culture-card ul li {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .culture-card ul li::before { content: '• '; color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      text-align: center;
+      padding: 3rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+    }
+
+    /* ── COUNTER-CHART ── */
+    .counter-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    .counter-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+    .counter-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-dim);
+    }
+    .counter-table tr:hover td { background: rgba(201,168,76,0.04); }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      font-family: 'Cinzel', serif;
+      border-radius: 2px;
+      background: rgba(201,168,76,0.1);
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="mask-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="50" cy="52" rx="36" ry="42" fill="#2a1f0a" stroke="#c9a84c" stroke-width="2"/>
+    <ellipse cx="35" cy="42" rx="9" ry="6" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+    <ellipse cx="65" cy="42" rx="9" ry="6" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+    <path d="M38 65 Q50 73 62 65" stroke="#c9a84c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M28 30 Q50 18 72 30" stroke="#c9a84c" stroke-width="1" fill="none"/>
+    <circle cx="35" cy="42" r="3" fill="#c9a84c" opacity="0.6"/>
+    <circle cx="65" cy="42" r="3" fill="#c9a84c" opacity="0.6"/>
+    <line x1="50" y1="10" x2="50" y2="94" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+  </svg>
+  <p class="subtitle">An Open-World Fantasy RPG</p>
+  <h1>Spirit Masks</h1>
+  <p class="tagline">"You are not the face beneath the mask — you are the spirit that wears it."</p>
+  <a href="#concept" class="scroll-cta">Discover the World</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#concept">Concept</a>
+  <a href="#masks">The Masks</a>
+  <a href="#world">The World</a>
+  <a href="#progression">Progression</a>
+  <a href="#lore">Lore</a>
+</nav>
+
+<!-- CONCEPT -->
+<div id="concept" class="section-bg">
+  <section>
+    <p class="section-label">Core Concept</p>
+    <h2>The Mask Changes Everything</h2>
+    <div class="divider"></div>
+    <p>
+      Spirit Masks is an open-world fantasy RPG built around a single, radical mechanic: the masks you wear define who you are. Each mask you collect reshapes your persona, transforms your stats, unlocks new abilities — and exposes new vulnerabilities. The key to survival is knowing <em>when</em> to switch.
+    </p>
+    <p>
+      You begin as a humble villager in a world at peace, setting out from a small central village with nothing but a basic wooden mask. What follows is a journey through elemental realms, ancient mysteries, and a growing threat that only someone willing to embrace many faces can confront.
+    </p>
+
+    <div class="lore-quote">
+      "Masks are not disguises here. They are identity. The rare ones — the legendary masks — they don't just change your face. They change what you are capable of."
+      <cite>— From the Concept Notes</cite>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <span class="icon">⚔️</span>
+        <h3>Strategic Combat</h3>
+        <p>Every enemy has elemental strengths and weaknesses. Swap masks mid-battle to exploit openings and survive encounters that would otherwise be impossible.</p>
+      </div>
+      <div class="concept-card">
+        <span class="icon">🌍</span>
+        <h3>Open World Exploration</h3>
+        <p>A fog-of-war map gradually revealed as you explore. Multiple elemental realms — Earth, Fire, Water, Wind — each with their own terrain, enemies, and secrets.</p>
+      </div>
+      <div class="concept-card">
+        <span class="icon">📈</span>
+        <h3>Dual Progression</h3>
+        <p>Level up to gain small universal stat boosts. But the real power comes from the masks — each one delivers dramatic, specialised shifts that no amount of levelling can match.</p>
+      </div>
+      <div class="concept-card">
+        <span class="icon">🧩</span>
+        <h3>Non-Linear Choice</h3>
+        <p>After the starting zone, you choose which elemental realm to enter. No forced path. Your mask collection shapes both your options and your playstyle.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MASKS -->
+<div id="masks">
+  <section>
+    <p class="section-label">The Mask System</p>
+    <h2>Power, Weakness, and Choice</h2>
+    <div class="divider"></div>
+    <p>
+      Every mask offers a powerful advantage paired with a deliberate tradeoff. This design principle is central to the game — there are no perfect masks, only the right mask for the right moment.
+    </p>
+
+    <h3 style="font-family:'Cinzel',serif; font-size:1rem; color:var(--gold-light); margin: 2rem 0 1rem; letter-spacing:0.1em;">ELEMENTAL MASKS</h3>
+    <div class="elements-grid">
+      <div class="element-card" style="--elem-color: var(--earth)">
+        <span class="elem-icon">🪨</span>
+        <div class="elem-name">Earth</div>
+        <div class="elem-desc">High defence &amp; physical resistance. Vulnerable to fire.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--fire)">
+        <span class="elem-icon">🔥</span>
+        <div class="elem-name">Fire</div>
+        <div class="elem-desc">High offence &amp; burn damage. Vulnerable to water.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--water)">
+        <span class="elem-icon">🌊</span>
+        <div class="elem-name">Water</div>
+        <div class="elem-desc">Healing &amp; flow abilities. Vulnerable to lightning.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--wind)">
+        <span class="elem-icon">💨</span>
+        <div class="elem-name">Wind</div>
+        <div class="elem-desc">Superior speed &amp; evasion. Vulnerable to earth.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--lightning)">
+        <span class="elem-icon">⚡</span>
+        <div class="elem-name">Lightning</div>
+        <div class="elem-desc">Burst damage &amp; stun. Advanced — higher level required.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--ice)">
+        <span class="elem-icon">❄️</span>
+        <div class="elem-name">Ice</div>
+        <div class="elem-desc">Crowd control &amp; slow. Advanced — higher level required.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--life)">
+        <span class="elem-icon">✨</span>
+        <div class="elem-name">Life</div>
+        <div class="elem-desc">Regeneration &amp; summoning. Counters death masks.</div>
+      </div>
+      <div class="element-card" style="--elem-color: var(--death)">
+        <span class="elem-icon">💀</span>
+        <div class="elem-name">Death</div>
+        <div class="elem-desc">Necromancy &amp; drain abilities. Countered by life masks.</div>
+      </div>
+    </div>
+
+    <!-- EARTH MASK EXAMPLE -->
+    <div class="mask-example">
+      <div>
+        <h3>🪨 Earth Mask — Example</h3>
+        <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:1.5rem;">A shield of stone and soil. Immovable as a mountain — until fire finds the cracks.</p>
+        <div class="stat-row">
+          <span class="stat-label">Defence</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:85%; background:var(--earth)"></div></div>
+          <span class="stat-value">+85%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Offence</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:50%; background:#888"></div></div>
+          <span class="stat-value">+50%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Speed</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:30%; background:#555"></div></div>
+          <span class="stat-value">+30%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Health</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:70%; background:#888"></div></div>
+          <span class="stat-value">+70%</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--life);">Bonuses</h3>
+        <ul class="bonus-list" style="margin-bottom:1.5rem;">
+          <li>Earth &amp; physical resistance</li>
+          <li>Water resistance</li>
+          <li>Tremor ability — shockwave attack</li>
+          <li>Stone skin — reduce incoming damage</li>
+        </ul>
+        <h3 style="color:var(--fire);">Weaknesses</h3>
+        <ul class="penalty-list">
+          <li>Fire resistance (heavy penalty)</li>
+          <li>Speed significantly reduced</li>
+          <li>Lightning resistance (mild penalty)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Cinzel',serif; font-size:1rem; color:var(--gold-light); margin: 3rem 0 0.75rem; letter-spacing:0.1em;">MASK COUNTER RELATIONSHIPS</h3>
+    <p style="color:var(--text-dim); font-size:0.9rem;">A rock-paper-scissors style system underlies all mask interactions.</p>
+    <table class="counter-table">
+      <thead>
+        <tr>
+          <th>Your Mask</th>
+          <th>Strong Against</th>
+          <th>Weak Against</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>🪨 Earth</td><td><span class="tag">Wind</span> <span class="tag">Physical</span></td><td><span class="tag" style="color:var(--fire)">Fire</span></td></tr>
+        <tr><td>🔥 Fire</td><td><span class="tag">Earth</span> <span class="tag">Ice</span></td><td><span class="tag" style="color:var(--water)">Water</span></td></tr>
+        <tr><td>🌊 Water</td><td><span class="tag">Fire</span> <span class="tag">Poison</span></td><td><span class="tag" style="color:var(--lightning)">Lightning</span></td></tr>
+        <tr><td>💨 Wind</td><td><span class="tag">Lightning</span></td><td><span class="tag" style="color:var(--earth)">Earth</span></td></tr>
+        <tr><td>✨ Life</td><td><span class="tag">Death</span></td><td><span class="tag" style="color:var(--death)">Death (high tier)</span></td></tr>
+        <tr><td>💀 Death</td><td><span class="tag">Poison</span> <span class="tag">Life (low tier)</span></td><td><span class="tag" style="color:var(--life)">Life</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<!-- WORLD -->
+<div id="world" class="section-bg-2">
+  <section>
+    <p class="section-label">The World</p>
+    <h2>A Fantasy Realm of Elemental Kingdoms</h2>
+    <div class="divider"></div>
+
+    <div class="world-intro">
+      <div>
+        <p>The world of Spirit Masks is a classic high-fantasy setting — no modern technology, no machines. Forests thick with ancient magic, valleys carved by forgotten wars, volcanoes that breathe fire and purpose, oceans that hide civilisations beneath their surface.</p>
+        <p>At the centre of it all is a small, quiet village — where your story begins. The world is at peace when you arrive. That peace will not last.</p>
+        <p>Each elemental realm is distinct not just in appearance but in culture, architecture, enemies, and the masks they guard. The masks of each realm reflect the nature of the land itself.</p>
+      </div>
+      <div>
+        <div class="concept-card" style="margin-bottom:1rem">
+          <h3>🏔 Earth Realm</h3>
+          <p>Mountain villages, stone fortresses, ancient quarries. Home of physical warriors and the Earth Mask.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom:1rem">
+          <h3>🌋 Fire Realm</h3>
+          <p>Volcanic plains, ash cities, forges that never cool. Aggressive enemies who hit first and ask later.</p>
+        </div>
+        <div class="concept-card" style="margin-bottom:1rem">
+          <h3>🌊 Water Realm</h3>
+          <p>Coastal cities, flooded ruins, underwater passages. Enemies who heal and adapt to your tactics.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🌪 Wind Realm</h3>
+          <p>Sky bridges, cliff-side settlements, tempests. The fastest and most evasive enemies in the game.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PROGRESSION -->
+<div id="progression">
+  <section>
+    <p class="section-label">Progression</p>
+    <h2>Your Journey Through the Realms</h2>
+    <div class="divider"></div>
+    <p>The world is structured around a level-based progression that opens new zones and masks as you grow. But within each tier, the order is yours to choose.</p>
+
+    <div class="progression-zones">
+      <div class="zone" style="--zone-color: #c9a84c">
+        <div class="zone-level">LEVELS 1 – 10</div>
+        <h3>The Starting Village</h3>
+        <p>Begin with a basic wooden mask. Learn the fundamentals — combat, exploration, mask-swapping. Help the village, learn the lore of masks, and prepare to venture into the realms.</p>
+      </div>
+      <div class="zone" style="--zone-color: var(--earth)">
+        <div class="zone-level">LEVELS 10 – 25 · YOUR CHOICE</div>
+        <h3>The Four Elemental Realms</h3>
+        <p>Earth, Fire, Water, Wind. Enter in any order. Each realm has its own central city hub, quests, bosses, and the elemental mask of that realm waiting to be earned.</p>
+      </div>
+      <div class="zone" style="--zone-color: var(--lightning)">
+        <div class="zone-level">LEVELS 25 – 40 · ADVANCED</div>
+        <h3>The Advanced Elemental Zones</h3>
+        <p>Lightning, Ice, Poison. Harder enemies, more complex mask interactions, and masks that require experience to wield effectively. The world's deeper threats begin to stir.</p>
+      </div>
+      <div class="zone" style="--zone-color: var(--death)">
+        <div class="zone-level">LEVELS 40+ · ENDGAME</div>
+        <h3>The Final Zone</h3>
+        <p>The main villain's domain. Everything you have collected — every mask, every ability, every tradeoff you've mastered — will be needed here. The spirit that wears all faces must become something more.</p>
+      </div>
+    </div>
+
+    <div class="lore-quote" style="margin-top:3rem;">
+      "Experience is earned through blood and service — cutting down enemies or aiding the villages that shelter you. Whether simply walking the world grants wisdom is a question the elders still debate."
+      <cite>— On the Nature of Growth</cite>
+    </div>
+  </section>
+</div>
+
+<!-- LORE -->
+<div id="lore" class="section-bg">
+  <section>
+    <p class="section-label">World Lore</p>
+    <h2>The Culture of the Mask</h2>
+    <div class="divider"></div>
+    <p>
+      In this world, masks are not unusual. Everyone wears one. A basic mask is a birthright — modest, functional, a symbol of belonging to the community. But the legendary masks, the ones worn by heroes and feared by enemies, are something else entirely.
+    </p>
+    <p>
+      An alternate vision of the protagonist has emerged from the design notes: rather than a person wearing a mask, the protagonist may be a <strong>spirit — a wisp</strong>, invisible to the naked eye. The floating mask is all that others see. It is their body, their face, and their power. This framing makes the mask not a tool the protagonist uses, but the very form they take.
+    </p>
+
+    <div class="culture-grid">
+      <div class="culture-card">
+        <h3>How Masks Are Obtained</h3>
+        <ul>
+          <li>Defeating realm bosses</li>
+          <li>Solving ancient puzzles</li>
+          <li>Exploration &amp; discovery</li>
+          <li>Completing village quests</li>
+          <li>Co-operative assistance</li>
+        </ul>
+      </div>
+      <div class="culture-card">
+        <h3>Mask Tiers</h3>
+        <ul>
+          <li>Basic masks — worn by all</li>
+          <li>Elemental masks — realm rewards</li>
+          <li>Concept masks — Life, Death</li>
+          <li>Legendary masks — rarest, most powerful</li>
+          <li>Starting mask — the wooden mask</li>
+        </ul>
+      </div>
+      <div class="culture-card">
+        <h3>The Protagonist's Path</h3>
+        <ul>
+          <li>Begins as a simple villager</li>
+          <li>Discovers the world is in peril</li>
+          <li>Takes up arms and a wooden mask</li>
+          <li>Collects masks — never discards</li>
+          <li>Swaps strategically, not permanently</li>
+        </ul>
+      </div>
+      <div class="culture-card">
+        <h3>Unanswered Questions</h3>
+        <ul>
+          <li>Single villain or villain tree?</li>
+          <li>Does exploration grant XP?</li>
+          <li>Masks transform weapon or add to it?</li>
+          <li>Economy &amp; trading systems</li>
+          <li>Fast travel &amp; waypoints</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p style="color:var(--gold); font-size:1rem; margin-bottom:0.5rem;">SPIRIT MASKS</p>
+  <p>Game concept in development — all lore and systems subject to change.</p>
+</footer>
+
+</body>
+</html>

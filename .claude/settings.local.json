@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); git --version)",
+      "PowerShell(if \\(Test-Path \"$env:APPDATA\\\\Claude\\\\claude_desktop_config.json\"\\) { Get-Content \"$env:APPDATA\\\\Claude\\\\claude_desktop_config.json\" } else { \"Not found\" })",
+      "PowerShell(if \\(Test-Path \"$env:USERPROFILE\\\\.claude\\\\settings.json\"\\) { Get-Content \"$env:USERPROFILE\\\\.claude\\\\settings.json\" } else { \"Not found\" })",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-get-users",
+      "mcp__claude_ai_Notion__notion-fetch"
+    ]
+  }
+}
